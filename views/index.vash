@@ -6,7 +6,7 @@
         }
         
         @model.categories.forEach(function (category) {
-            <div><a href="#">@category.name</a></div>
+            <div><span>@(category.notes ? category.notes.length : 0) - </span><a href="#">@category.name</a></div>
         })
     });
 })
