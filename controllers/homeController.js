@@ -1,6 +1,6 @@
 (function (homeController) {
-    
-    var data = require("../data")
+        
+    var data = require("../data");
     
     homeController.init = function (app) {
         
@@ -8,7 +8,7 @@
             
             data.getNoteCategories(function (err, results) {
                 res.render("index", {
-                    title: "Express + Vash", 
+                    title: "The board", 
                     error: err, 
                     categories: results
                 });
@@ -16,4 +16,4 @@
             
         });
     };
-})(module.exports)
+})(module.exports);
