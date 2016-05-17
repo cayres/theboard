@@ -17,7 +17,7 @@
                     if (err) {
                         console.log("Failed to count notes!");
                     } else {
-                        if (count == 0) {
+                        if (count === 0) {
                             console.log("Seeding the database");
                             seedData.initialNotes.forEach(function (item) {
                                 db.notes.insert(item, function (err) {
