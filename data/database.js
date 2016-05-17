@@ -1,10 +1,10 @@
 //database.js
 (function (database) {
-    
+
     var mongodb = require('mongodb');
     var mongoUrl = "mongodb://localhost:27017/theboard";
     var theDB = null;
-    
+
     database.getDb = function (next) {
         if (!theDB) {
             mongodb.MongoClient.connect(mongoUrl, function (err, db) {
@@ -12,7 +12,8 @@
                     next(err, null);
                 } else {
                     theDB = {
-                        db: db
+                        db: db,
+                        notes: db.collection("notes")
                     };
                     next(null, theDB);
                 }
@@ -21,5 +22,5 @@
             next(null, theDB);
         }
     };
-    
+
 })(module.exports);
