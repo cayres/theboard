@@ -5,8 +5,40 @@
     var test = require('./test');
 
     data.getNoteCategories = function (next) {
-        next(null, seedData.initialNotes);
+         database.getDb(function (err, db) {
+           if (err) {
+               next(err, null);
+           } else {
+               db.notes.find().sort({name: 1}).toArray(function (err, result) {
+                   if (err) {
+                       next(err, null);
+                   } else {
+                       next(null, result);
+                   }
+               })
+           }
+         });
     };
+
+    data.createNewCategory = function (categoryName, next) {
+        database.getDb(function (err, db) {
+           if (err) {
+               next(err, null);
+           } else {
+               var category = {
+                   name: categoryName,
+                   notes: []
+               };
+               db.notes.insert(category, function (err) {
+                   if (err) {
+                       next(err);
+                   } else {
+                       next(null);
+                   }
+               })
+           }
+        })
+    }
 
     function seedDatabase() {
         database.getDb(function (err, db) {
@@ -34,6 +66,7 @@
            }
         });
     }
+
     seedDatabase();
     console.log(test.test);
 

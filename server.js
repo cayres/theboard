@@ -4,6 +4,7 @@ var http = require("http");
 var express = require("express");
 var app = express();
 var controllers = require("./controllers");
+var bodyParser = require('body-parser')
 // var ejsEngine = require("ejs-locals");
 
 //Setup View Engine
@@ -11,6 +12,8 @@ var controllers = require("./controllers");
 // app.engine("ejs", ejsEngine); // support master page
 // app.set("view engine", "ejs"); // ejs view engine
 app.set("view engine", "vash");
+
+app.use(bodyParser.urlencoded({ extended: false }))
 
 //Set the public static folder
 app.use(express.static(__dirname + "/public"));

@@ -15,5 +15,17 @@
             });               
             
         });
+
+        app.post("/newCategory", function (req, res) {
+            var categoryName = req.body.categoryName;
+            data.createNewCategory(categoryName, function (err) {
+                if (err) {
+                    console.log(err);
+                    res.redirect("/")
+                } else {
+                    res.redirect("/notes/" + categoryName);
+                }
+            });
+        });;
     };
 })(module.exports);
