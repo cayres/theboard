@@ -23,21 +23,31 @@
     data.createNewCategory = function (categoryName, next) {
         database.getDb(function (err, db) {
            if (err) {
-               next(err, null);
+               next(err);
            } else {
-               var category = {
-                   name: categoryName,
-                   notes: []
-               };
-               db.notes.insert(category, function (err) {
+               db.notes.find({name: categoryName}).count(function(err, count){
                    if (err) {
                        next(err);
                    } else {
-                       next(null);
+                       if (count != 0) {
+                           next("Category already exists");
+                       }else{
+                           var category = {
+                                name: categoryName,
+                                notes: []
+                            };
+                            db.notes.insert(category, function (err) {
+                                if (err) {
+                                    next(err);
+                                } else {
+                                    next(null);
+                                }
+                            });
+                       }
                    }
-               })
+               });
            }
-        })
+        });
     }
 
     function seedDatabase() {
