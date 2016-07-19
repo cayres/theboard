@@ -10,7 +10,8 @@
                 res.render("index", {
                     title: "The board", 
                     error: err, 
-                    categories: results
+                    categories: results,
+                    newCategoryError: req.flash("newCategoryName")
                 });
             });               
             
@@ -21,6 +22,7 @@
             data.createNewCategory(categoryName, function (err) {
                 if (err) {
                     console.log(err);
+                    req.flash("newCategoryName", err);
                     res.redirect("/")
                 } else {
                     res.redirect("/notes/" + categoryName);

@@ -10,9 +10,11 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
     "ejs": "^2.4.1",
     "ejs-locals": "^1.0.2",
     "express": "^4.13.4",
+    "express-session": "^1.14.0",
     "jade": "^1.11.0",
     "mongodb": "^2.1.18",
     "vash": "^0.11.3"

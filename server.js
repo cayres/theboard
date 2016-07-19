@@ -5,6 +5,9 @@ var express = require("express");
 var app = express();
 var controllers = require("./controllers");
 var bodyParser = require('body-parser')
+var flash = require("connect-flash");
+var cookieParser = require("cookie-parser");
+var session = require("express-session");
 // var ejsEngine = require("ejs-locals");
 
 //Setup View Engine
@@ -13,7 +16,10 @@ var bodyParser = require('body-parser')
 // app.set("view engine", "ejs"); // ejs view engine
 app.set("view engine", "vash");
 
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(session({ secret: "TheBoard"}))
+app.use(flash());
 
 //Set the public static folder
 app.use(express.static(__dirname + "/public"));
@@ -30,4 +36,5 @@ controllers.init(app);
 
 var server = http.createServer(app);
 
-server.listen(3000)
+//server.listen(3000)
+server.listen(process.env.PORT)

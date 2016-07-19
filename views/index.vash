@@ -14,6 +14,10 @@
       </div>
 
       <div class="row">
+        @if (model.newCategoryError) {
+          <p class="text-warning">@model.newCategoryError</p>
+        }
+      
         <form action="/newCategory" role="form" method="post" class="form-inline">
           <input type="text" name="categoryName" class="form-control" placeholder="category name">
           <input type="submit" value="New Category" class="btn btn-primary">
