@@ -17,6 +17,7 @@ var session = require("express-session");
 app.set("view engine", "vash");
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session({ secret: "TheBoard"}))
 app.use(flash());

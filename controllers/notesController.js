@@ -18,6 +18,30 @@
             });
         
         });
+        
+        app.post("/api/notes/:categoryName", function (req, res) {
+            
+            console.log("teste")
+            
+            var categoryName = req.params.categoryName;
+            
+            var noteToInsert = {
+                note: req.body.note,
+                color: req.body.color,
+                author: "Rodrigo Cayres"
+            }
+            
+            console.log(noteToInsert);
+            
+            data.addNote(categoryName, noteToInsert, function(err){
+                if (err) {
+                    res.status(400).send("Failed to add note to data store.");
+                } else {
+                    res.set("Content-Type", "application/json");
+                    res.status(201).send(noteToInsert);
+                }
+            });
+        });
     };
     
 })(module.exports)

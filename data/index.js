@@ -29,6 +29,16 @@
             }
         });
     };
+    
+    data.addNote = function (categoryName, noteToInsert, next) {
+        database.getDb(function(err, db) {
+                if (err) {
+                    next(err)
+                } else {
+                    db.notes.update({name: categoryName}, {$push: {notes: noteToInsert} }, { upsert : true }, next);
+                }
+        });
+    };
 
     data.createNewCategory = function (categoryName, next) {
         database.getDb(function (err, db) {
