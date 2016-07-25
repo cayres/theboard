@@ -20,7 +20,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session({ secret: "TheBoard"}))
+// Middleware for send messages to render
 app.use(flash());
+
+//use authentication
+var auth = require("./auth");
+auth.init(app);
 
 //Set the public static folder
 app.use(express.static(__dirname + "/public"));
@@ -37,5 +42,5 @@ controllers.init(app);
 
 var server = http.createServer(app);
 
-// server.listen(3000)
-server.listen(process.env.PORT)
+server.listen(3000)
+// server.listen(process.env.PORT)
