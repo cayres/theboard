@@ -2,6 +2,7 @@
 (function (auth) {
 
 	var data = require("../data");
+	var hasher = require("./hasher");
 	
 	auth.init = function (app) {
 		
@@ -15,12 +16,19 @@
         });
 
         app.post("/register", function (req, res) {
+            
+            var salt = hasher.createSalt();
+            
+            var password = req.body.password
+            
+            var passwordHash = hasher.computeHash(password, salt);
+            
         	var user = {
         		name: req.body.name,
         		email: req.body.email,
-        		userName: req.body.userName,
-        		passwordHash: "",
-        		salt: ""
+        		userName: req.body.username,
+        		passwordHash: passwordHash,
+        		salt: salt
         	};
 
         	data.addUser(user, function (err) {
