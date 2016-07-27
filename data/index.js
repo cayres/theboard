@@ -1,3 +1,4 @@
+// data/index.js
 (function (data) {
 
     var seedData = require('./seedData');

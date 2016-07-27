@@ -8,11 +8,37 @@
 
 	function userVerify(username, password, next) {
 		data.getUser(username, function(err, user){
-			
+			if (!err && user) {
+                var testHash = hasher.computeHash(password, user.salt);
+                if (testHash === user.passwordHash) {
+                    next(null, user);
+                    return;
+                }
+            }
+            next(null, false, { message: "Invalida Credentials."});
 		});
 	}
 	
 	auth.init = function (app) {
+
+        passport.use(new localStrategy(userVerify));
+
+        passport.serializeUser(function (user, next) {
+            next(null, user.username);
+        });
+
+        passport.deserializeUser(function (key, next) {
+            data.getUser(key, function (err, user) {
+                if (err) {
+                    next(null, false, { message: "Failed to retrieve user."})
+                }else{
+                    next(null, user);
+                }
+            })
+        })
+
+        app.use(passport.initialize());
+        app.use(passport.session());
 		
 		app.get("/register", function (req, res) {
             
