@@ -20,11 +20,28 @@
 		});
 	}
 	
+	auth.ensureAuthenticated = function (req, res, next){
+	    if (req.isAuthenticated()) {
+	        next();
+	    } else{
+	        res.redirect("/login");
+	    }
+	}
+	
+	auth.ensureApiAuthenticated = function (req, res, next){
+	    if (req.isAuthenticated()) {
+	        next();
+	    } else{
+	        res.send(401, "Not authorized!");
+	    }
+	}
+	
 	auth.init = function (app) {
 
         passport.use(new localStrategy(userVerify));
 
         passport.serializeUser(function (user, next) {
+            console.log(user);
             next(null, user.username);
         });
 
@@ -32,7 +49,7 @@
             data.getUser(key, function (err, user) {
                 if (err) {
                     next(null, false, { message: "Failed to retrieve user."})
-                }else{
+                }else{3
                     next(null, user);
                 }
             })
