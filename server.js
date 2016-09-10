@@ -44,3 +44,7 @@ var server = http.createServer(app);
 
 // server.listen(3000)
 server.listen(process.env.PORT)
+
+
+var updater = require("./updater");
+updater.init(server);
